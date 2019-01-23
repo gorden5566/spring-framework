@@ -28,6 +28,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 根据classpath加载资源
+ * 优先级为clazz > classLoader，若两者均为null，则使用ClassLoader.getSystemResource加载资源
+ *
  * {@link Resource} implementation for class path resources. Uses either a
  * given {@link ClassLoader} or a given {@link Class} for loading resources.
  *
@@ -43,11 +46,20 @@ import org.springframework.util.StringUtils;
  */
 public class ClassPathResource extends AbstractFileResolvingResource {
 
+	/**
+	 * 要加载的资源路径
+	 */
 	private final String path;
 
+	/**
+	 * 用于加载资源
+	 */
 	@Nullable
 	private ClassLoader classLoader;
 
+	/**
+	 * 用于加载资源，通过构造函数指定
+	 */
 	@Nullable
 	private Class<?> clazz;
 
