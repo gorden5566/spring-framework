@@ -20,6 +20,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ResourceUtils;
 
 /**
+ * 用于加载资源的策略(通过类路径、文件系统指定资源)接口
+ *
  * Strategy interface for loading resources (e.. class path or file system
  * resources). An {@link org.springframework.context.ApplicationContext}
  * is required to provide this functionality, plus extended
@@ -46,6 +48,8 @@ public interface ResourceLoader {
 
 
 	/**
+	 * 返回指定资源的Resource handle
+	 *
 	 * Return a Resource handle for the specified resource location.
 	 * <p>The handle should always be a reusable resource descriptor,
 	 * allowing for multiple {@link Resource#getInputStream()} calls.
@@ -67,6 +71,8 @@ public interface ResourceLoader {
 	Resource getResource(String location);
 
 	/**
+	 * 返回ResourceLoader使用的ClassLoader
+	 *
 	 * Expose the ClassLoader used by this ResourceLoader.
 	 * <p>Clients which need to access the ClassLoader directly can do so
 	 * in a uniform manner with the ResourceLoader, rather than relying

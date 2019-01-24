@@ -19,6 +19,8 @@ package org.springframework.core;
 import org.springframework.util.Assert;
 
 /**
+ * ThreadLocal的子类，初始化时必须传入一个名字，便于后续跟踪
+ *
  * {@link ThreadLocal} subclass that exposes a specified name
  * as {@link #toString()} result (allowing for introspection).
  *

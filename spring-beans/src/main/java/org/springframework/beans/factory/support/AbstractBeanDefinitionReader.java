@@ -35,6 +35,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ * BeanDefinitionReader的一个抽象基类，实现了BeanDefinitionReader接口
+ * 提供了通用的属性，包括bean工厂(BeanDefinitionRegistry)和用于加载bean的ClassLoader
+ *
  * Abstract base class for bean definition readers which implement
  * the {@link BeanDefinitionReader} interface.
  *
@@ -51,6 +54,9 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 	/** Logger available to subclasses. */
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * 用于加载BeanDefinition的bean工厂,在构造函数中指定即可
+	 */
 	private final BeanDefinitionRegistry registry;
 
 	@Nullable
@@ -86,9 +92,11 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 		this.registry = registry;
 
 		// Determine ResourceLoader to use.
+		// 如果是ResourceLoader的实例，则直接拿过来用(ApplicationContext继承了ResourceLoader)
 		if (this.registry instanceof ResourceLoader) {
 			this.resourceLoader = (ResourceLoader) this.registry;
 		}
+		// 否则new一个PathMatchingResourcePatternResolver(针对一般的beanFactory，不是来自ApplicationContext)
 		else {
 			this.resourceLoader = new PathMatchingResourcePatternResolver();
 		}

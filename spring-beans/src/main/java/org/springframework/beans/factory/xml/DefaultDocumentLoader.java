@@ -69,10 +69,13 @@ public class DefaultDocumentLoader implements DocumentLoader {
 	public Document loadDocument(InputSource inputSource, EntityResolver entityResolver,
 			ErrorHandler errorHandler, int validationMode, boolean namespaceAware) throws Exception {
 
+		// 构建 DocumentBuilderFactory
 		DocumentBuilderFactory factory = createDocumentBuilderFactory(validationMode, namespaceAware);
 		if (logger.isTraceEnabled()) {
 			logger.trace("Using JAXP provider [" + factory.getClass().getName() + "]");
 		}
+
+		// 构建 DocumentBuilder
 		DocumentBuilder builder = createDocumentBuilder(factory, entityResolver, errorHandler);
 		return builder.parse(inputSource);
 	}
@@ -93,10 +96,13 @@ public class DefaultDocumentLoader implements DocumentLoader {
 
 		if (validationMode != XmlValidationModeDetector.VALIDATION_NONE) {
 			factory.setValidating(true);
+
+			// XSD模式的独有逻辑
 			if (validationMode == XmlValidationModeDetector.VALIDATION_XSD) {
 				// Enforce namespace aware for XSD...
 				factory.setNamespaceAware(true);
 				try {
+					// 设置固定属性
 					factory.setAttribute(SCHEMA_LANGUAGE_ATTRIBUTE, XSD_SCHEMA_LANGUAGE);
 				}
 				catch (IllegalArgumentException ex) {
@@ -128,10 +134,17 @@ public class DefaultDocumentLoader implements DocumentLoader {
 			@Nullable EntityResolver entityResolver, @Nullable ErrorHandler errorHandler)
 			throws ParserConfigurationException {
 
+		// 创建一个新的 DocumentBuilder
+		// 通过调用 com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
+		// 创建 com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl 实例
 		DocumentBuilder docBuilder = factory.newDocumentBuilder();
+
+		// 设置 SAX EntityResolver
 		if (entityResolver != null) {
 			docBuilder.setEntityResolver(entityResolver);
 		}
+
+		// 设置 SAX ErrorHandler
 		if (errorHandler != null) {
 			docBuilder.setErrorHandler(errorHandler);
 		}

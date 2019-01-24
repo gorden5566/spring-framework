@@ -26,6 +26,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 /**
+ * XML验证模式检测器
+ * 根据XML流的内容决定使用 DTD验证 或 XSD验证
+ *
  * Detects whether an XML stream is using DTD- or XSD-based validation.
  *
  * @author Rob Harrop
@@ -98,15 +101,20 @@ public class XmlValidationModeDetector {
 				if (this.inComment || !StringUtils.hasText(content)) {
 					continue;
 				}
+
+				// 从文件中检测到 DOCTYPE
 				if (hasDoctype(content)) {
 					isDtdValidated = true;
 					break;
 				}
+
+				// 找到开放标签(比如读取到的行以符号 < 开始，下一个符号是字母，例如：<bean ...)，直接结束
 				if (hasOpeningTag(content)) {
 					// End of meaningful data...
 					break;
 				}
 			}
+			// 检测到 DOCTYPE 则使用 DTD 验证模式，否则使用 XSD 验证模式
 			return (isDtdValidated ? VALIDATION_DTD : VALIDATION_XSD);
 		}
 		catch (CharConversionException ex) {
