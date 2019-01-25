@@ -31,6 +31,8 @@ import org.springframework.lang.Nullable;
 public interface NamespaceHandlerResolver {
 
 	/**
+	 * 根据命名空间URL定位到对应的命名空间处理器NamespaceHandler
+	 *
 	 * Resolve the namespace URI and return the located {@link NamespaceHandler}
 	 * implementation.
 	 * @param namespaceUri the relevant namespace URI

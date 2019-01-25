@@ -37,6 +37,8 @@ import org.springframework.beans.factory.BeanDefinitionStoreException;
 public interface BeanDefinitionDocumentReader {
 
 	/**
+	 * 从指定的DOM文档中读取bean定义，然后注册到readerContext中
+	 *
 	 * Read bean definitions from the given DOM document and
 	 * register them with the registry in the given reader context.
 	 * @param doc the DOM document

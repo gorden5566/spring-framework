@@ -30,6 +30,8 @@ import java.util.EventListener;
 public interface ReaderEventListener extends EventListener {
 
 	/**
+	 * 设置完bean的模式值后发送该通知
+	 *
 	 * Notification that the given defaults has been registered.
 	 * @param defaultsDefinition a descriptor for the defaults
 	 * @see org.springframework.beans.factory.xml.DocumentDefaultsDefinition
@@ -37,6 +39,8 @@ public interface ReaderEventListener extends EventListener {
 	void defaultsRegistered(DefaultsDefinition defaultsDefinition);
 
 	/**
+	 * 用于beanDefinition注册后发送通知
+	 *
 	 * Notification that the given component has been registered.
 	 * @param componentDefinition a descriptor for the new component
 	 * @see BeanComponentDefinition
@@ -44,12 +48,16 @@ public interface ReaderEventListener extends EventListener {
 	void componentRegistered(ComponentDefinition componentDefinition);
 
 	/**
+	 * 用于alias注册后发送通知
+	 *
 	 * Notification that the given alias has been registered.
 	 * @param aliasDefinition a descriptor for the new alias
 	 */
 	void aliasRegistered(AliasDefinition aliasDefinition);
 
 	/**
+	 * 用于import处理完后发送通知
+	 *
 	 * Notification that the given import has been processed.
 	 * @param importDefinition a descriptor for the import
 	 */
