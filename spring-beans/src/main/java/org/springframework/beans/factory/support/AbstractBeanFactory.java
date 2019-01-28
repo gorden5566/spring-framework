@@ -239,13 +239,20 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
 			@Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
 
+		// beanName处理
+		// 1. 如果是factoryBean则去掉前缀&
+		// 2. 然后将别名转换为原始名
 		final String beanName = transformedBeanName(name);
 		Object bean;
 
 		// Eagerly check singleton cache for manually registered singletons.
+		// 检查singleton对象缓存中是否已注册过
 		Object sharedInstance = getSingleton(beanName);
+
+		// 已经注册过，并且参数不为空
 		if (sharedInstance != null && args == null) {
 			if (logger.isTraceEnabled()) {
+				// single对象正在创建中
 				if (isSingletonCurrentlyInCreation(beanName)) {
 					logger.trace("Returning eagerly cached instance of singleton bean '" + beanName +
 							"' that is not fully initialized yet - a consequence of a circular reference");
@@ -1643,6 +1650,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			Object beanInstance, String name, String beanName, @Nullable RootBeanDefinition mbd) {
 
 		// Don't let calling code try to dereference the factory if the bean isn't a factory.
+		// factoryBean校验
 		if (BeanFactoryUtils.isFactoryDereference(name)) {
 			if (beanInstance instanceof NullBean) {
 				return beanInstance;
@@ -1655,14 +1663,21 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// Now we have the bean instance, which may be a normal bean or a FactoryBean.
 		// If it's a FactoryBean, we use it to create a bean instance, unless the
 		// caller actually wants a reference to the factory.
+		// beanInstance 可能是一个普通的 bean，也可能是一个 FactoryBean
+		// 如果不是 FactoryBean 则直接返回结果
+		// 否则，如果bean的名字带&符号，就是说要获取FactoryBean，也直接返回结果
 		if (!(beanInstance instanceof FactoryBean) || BeanFactoryUtils.isFactoryDereference(name)) {
 			return beanInstance;
 		}
 
+		// 否则，要根据FactoryBean生成所需的bean对象
 		Object object = null;
 		if (mbd == null) {
+			// 从FactoryBean创建的Singleton Bean缓存中取bean对象
 			object = getCachedObjectForFactoryBean(beanName);
 		}
+
+		// 缓存中未取到
 		if (object == null) {
 			// Return bean instance from factory.
 			FactoryBean<?> factory = (FactoryBean<?>) beanInstance;
