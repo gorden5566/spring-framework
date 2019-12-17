@@ -60,13 +60,17 @@ public abstract class AbstractSingleBeanDefinitionParser extends AbstractBeanDef
 	 */
 	@Override
 	protected final AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
+		// 创建 BeanDefinitionBuilder
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition();
 		String parentName = getParentName(element);
 		if (parentName != null) {
 			builder.getRawBeanDefinition().setParentName(parentName);
 		}
+
+		// 获取 element 对应的 class
 		Class<?> beanClass = getBeanClass(element);
 		if (beanClass != null) {
+			// 设置 BeanDefinition 的 class
 			builder.getRawBeanDefinition().setBeanClass(beanClass);
 		}
 		else {
@@ -85,7 +89,10 @@ public abstract class AbstractSingleBeanDefinitionParser extends AbstractBeanDef
 			// Default-lazy-init applies to custom bean definitions as well.
 			builder.setLazyInit(true);
 		}
+		// 解析 element，填充 builder
 		doParse(element, parserContext, builder);
+
+		// 返回 BeanDefinition
 		return builder.getBeanDefinition();
 	}
 
@@ -104,6 +111,8 @@ public abstract class AbstractSingleBeanDefinitionParser extends AbstractBeanDef
 	}
 
 	/**
+	 * 检测 element 对应的 class 类型
+	 *
 	 * Determine the bean class corresponding to the supplied {@link Element}.
 	 * <p>Note that, for application classes, it is generally preferable to
 	 * override {@link #getBeanClassName} instead, in order to avoid a direct
@@ -147,6 +156,8 @@ public abstract class AbstractSingleBeanDefinitionParser extends AbstractBeanDef
 	}
 
 	/**
+	 * 解析 element，填充 BeanDefinitionBuilder，例如：设置 property value
+	 *
 	 * Parse the supplied {@link Element} and populate the supplied
 	 * {@link BeanDefinitionBuilder} as required.
 	 * <p>The default implementation does nothing.
