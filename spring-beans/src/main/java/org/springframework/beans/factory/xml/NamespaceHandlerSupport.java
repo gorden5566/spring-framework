@@ -70,7 +70,10 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 	@Override
 	@Nullable
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
+		// 获取 element 对应的 parser
 		BeanDefinitionParser parser = findParserForElement(element, parserContext);
+
+		// parse
 		return (parser != null ? parser.parse(element, parserContext) : null);
 	}
 
@@ -80,7 +83,10 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 	 */
 	@Nullable
 	private BeanDefinitionParser findParserForElement(Element element, ParserContext parserContext) {
+		// 获取 element name
 		String localName = parserContext.getDelegate().getLocalName(element);
+
+		// 根据 name 获取 parser
 		BeanDefinitionParser parser = this.parsers.get(localName);
 		if (parser == null) {
 			parserContext.getReaderContext().fatal(
@@ -130,6 +136,8 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 
 
 	/**
+	 * 注册 element 对应的 parser
+	 *
 	 * Subclasses can call this to register the supplied {@link BeanDefinitionParser} to
 	 * handle the specified element. The element name is the local (non-namespace qualified)
 	 * name.
