@@ -50,6 +50,8 @@ import org.springframework.util.CollectionUtils;
 public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver {
 
 	/**
+	 * handler 配置文件默认路径
+	 *
 	 * The location to look for the mapping files. Can be present in multiple JAR files.
 	 * HandlerMapping配置文件的位置，可以是jar包里的文件
 	 */
@@ -118,6 +120,8 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 	public NamespaceHandler resolve(String namespaceUri) {
 		// URI -> NamespaceHandler的实例或类名
 		Map<String, Object> handlerMappings = getHandlerMappings();
+
+		// 根据 namespaceUri 获取 handler
 		Object handlerOrClassName = handlerMappings.get(namespaceUri);
 
 		if (handlerOrClassName == null) {
@@ -175,6 +179,8 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 						// 初始化HandlerMapping
 						handlerMappings = new ConcurrentHashMap<>(mappings.size());
 						CollectionUtils.mergePropertiesIntoMap(mappings, handlerMappings);
+
+						// 赋值
 						this.handlerMappings = handlerMappings;
 					}
 					catch (IOException ex) {
