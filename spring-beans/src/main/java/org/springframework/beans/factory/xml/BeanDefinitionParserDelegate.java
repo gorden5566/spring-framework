@@ -86,6 +86,9 @@ import org.springframework.util.xml.DomUtils;
  */
 public class BeanDefinitionParserDelegate {
 
+	/**
+	 * 默认的 namespace uri
+	 */
 	public static final String BEANS_NAMESPACE_URI = "http://www.springframework.org/schema/beans";
 
 	public static final String MULTI_VALUE_ATTRIBUTE_DELIMITERS = ",; ";
@@ -1391,6 +1394,12 @@ public class BeanDefinitionParserDelegate {
 		return TRUE_VALUE.equals(value);
 	}
 
+	/**
+	 * 解析自定义 element
+	 *
+	 * @param ele
+	 * @return
+	 */
 	@Nullable
 	public BeanDefinition parseCustomElement(Element ele) {
 		return parseCustomElement(ele, null);
@@ -1398,15 +1407,20 @@ public class BeanDefinitionParserDelegate {
 
 	@Nullable
 	public BeanDefinition parseCustomElement(Element ele, @Nullable BeanDefinition containingBd) {
+		// 获取 element 的 namespace uri
 		String namespaceUri = getNamespaceURI(ele);
 		if (namespaceUri == null) {
 			return null;
 		}
+
+		// 根据 namespace uri 获取 NamespaceHandler
 		NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
 		if (handler == null) {
 			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]", ele);
 			return null;
 		}
+
+		// parse
 		return handler.parse(ele, new ParserContext(this.readerContext, this, containingBd));
 	}
 
@@ -1482,6 +1496,8 @@ public class BeanDefinitionParserDelegate {
 
 
 	/**
+	 * 获取节点的 namespace URI
+	 *
 	 * Get the namespace URI for the supplied node.
 	 * <p>The default implementation uses {@link Node#getNamespaceURI}.
 	 * Subclasses may override the default implementation to provide a
@@ -1517,10 +1533,22 @@ public class BeanDefinitionParserDelegate {
 		return desiredName.equals(node.getNodeName()) || desiredName.equals(getLocalName(node));
 	}
 
+	/**
+	 * 是否为默认的 namespace
+	 *
+	 * @param namespaceUri
+	 * @return
+	 */
 	public boolean isDefaultNamespace(@Nullable String namespaceUri) {
 		return (!StringUtils.hasLength(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));
 	}
 
+	/**
+	 * 是否为默认的 namespace
+	 *
+	 * @param node
+	 * @return
+	 */
 	public boolean isDefaultNamespace(Node node) {
 		return isDefaultNamespace(getNamespaceURI(node));
 	}
