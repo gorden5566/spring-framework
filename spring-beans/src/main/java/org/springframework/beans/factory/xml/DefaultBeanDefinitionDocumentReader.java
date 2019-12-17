@@ -85,6 +85,8 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 
 
 	/**
+	 * 解析 document element，注册 bean definition
+	 *
 	 * This implementation parses bean definitions according to the "spring-beans" XSD
 	 * (or DTD, historically).
 	 * <p>Opens a DOM Document; then initializes the default settings
@@ -117,6 +119,8 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 
 
 	/**
+	 * 解析 element root 节点，注册 BeanDefinitions
+	 *
 	 * Register each bean definition within the given root {@code <beans/>} element.
 	 */
 	@SuppressWarnings("deprecation")  // for Environment.acceptsProfiles(String...)
@@ -152,10 +156,11 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		// XML预处理扩展点
 		preProcessXml(root);
 
-		// 解析bean定义
+		// 解析bean定义，生成 BeanDefinitions
 		parseBeanDefinitions(root, this.delegate);
 
 		// XML后处理扩展点
+
 		postProcessXml(root);
 
 		// 重置委托类
@@ -184,9 +189,11 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 				if (node instanceof Element) {
 					Element ele = (Element) node;
 					if (delegate.isDefaultNamespace(ele)) {
+						// 解析默认元素
 						parseDefaultElement(ele, delegate);
 					}
 					else {
+						// 解析自定义节点元素
 						delegate.parseCustomElement(ele);
 					}
 				}
@@ -194,10 +201,17 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		}
 		// 处理自定义元素
 		else {
+			// 解析自定义节点元素
 			delegate.parseCustomElement(root);
 		}
 	}
 
+	/**
+	 * 解析自定义 element
+	 *
+	 * @param ele
+	 * @param delegate
+	 */
 	private void parseDefaultElement(Element ele, BeanDefinitionParserDelegate delegate) {
 		// 解析import元素
 		if (delegate.nodeNameEquals(ele, IMPORT_ELEMENT)) {
