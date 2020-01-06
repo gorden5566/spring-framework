@@ -251,12 +251,16 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 			logger.trace("Loading properties bean definitions from " + encodedResource);
 		}
 
+		// new一个空的Properties
 		Properties props = new Properties();
 		try {
+			// 获取InputStream
 			try (InputStream is = encodedResource.getResource().getInputStream()) {
+				// 加载配置（设置过编码）
 				if (encodedResource.getEncoding() != null) {
 					getPropertiesPersister().load(props, new InputStreamReader(is, encodedResource.getEncoding()));
 				}
+				// 加载配置（未设置过编码）
 				else {
 					getPropertiesPersister().load(props, is);
 				}
