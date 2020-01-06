@@ -160,7 +160,6 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		parseBeanDefinitions(root, this.delegate);
 
 		// XML后处理扩展点
-
 		postProcessXml(root);
 
 		// 重置委托类

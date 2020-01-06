@@ -192,6 +192,7 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 	public int loadBeanDefinitions(Resource... resources) throws BeanDefinitionStoreException {
 		Assert.notNull(resources, "Resource array must not be null");
 		int count = 0;
+		// 每个resource都需要处理
 		for (Resource resource : resources) {
 			count += loadBeanDefinitions(resource);
 		}
@@ -269,6 +270,7 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 	public int loadBeanDefinitions(String... locations) throws BeanDefinitionStoreException {
 		Assert.notNull(locations, "Location array must not be null");
 		int count = 0;
+		// 每个location都需要处理
 		for (String location : locations) {
 			count += loadBeanDefinitions(location);
 		}
