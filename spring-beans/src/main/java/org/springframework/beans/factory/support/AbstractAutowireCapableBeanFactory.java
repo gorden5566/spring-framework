@@ -451,6 +451,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	//---------------------------------------------------------------------
 
 	/**
+	 * 当前类最核心的一个方法，它的功能包括：创建bean实例，填充bean的属性，调用postProcessor等
 	 * Central method of this class: creates a bean instance,
 	 * populates the bean instance, applies post-processors, etc.
 	 * @see #doCreateBean
@@ -484,6 +485,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		try {
 			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
+			// 给BeanPostProcessors一个机会，可以创建bean的代理出来，这样就不走后面的创建bean逻辑
+			// 这里是通过InstantiationAwareBeanPostProcessor进行扩展的
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
 				return bean;
@@ -495,6 +498,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		try {
+			// 创建bean实例，会处理autowire，解决循环依赖
 			Object beanInstance = doCreateBean(beanName, mbdToUse, args);
 			if (logger.isTraceEnabled()) {
 				logger.trace("Finished creating instance of bean '" + beanName + "'");
