@@ -83,6 +83,9 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
 
 	/** Names of beans that are currently in creation. */
+	/**
+	 * 正在创建的singleton bean的名字，后面会根据这个来判断bean是否在创建中，解决循环依赖时会用到
+	 */
 	private final Set<String> singletonsCurrentlyInCreation =
 			Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 

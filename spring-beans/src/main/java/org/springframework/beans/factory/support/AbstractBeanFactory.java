@@ -1380,14 +1380,18 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			throws CannotLoadBeanClassException {
 
 		try {
+			// beanDefinition中有记录beanClass
 			if (mbd.hasBeanClass()) {
 				return mbd.getBeanClass();
 			}
+
+			// 系统设置了安全策略
 			if (System.getSecurityManager() != null) {
 				return AccessController.doPrivileged((PrivilegedExceptionAction<Class<?>>) () ->
 					doResolveBeanClass(mbd, typesToMatch), getAccessControlContext());
 			}
 			else {
+				// 解析beanClass
 				return doResolveBeanClass(mbd, typesToMatch);
 			}
 		}
@@ -1456,11 +1460,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 						}
 					}
 				}
+				// 动态解析，获取beanClass
 				return ClassUtils.forName(className, dynamicLoader);
 			}
 		}
 
 		// Resolve regularly, caching the result in the BeanDefinition...
+		// 使用默认的classLoader和beanDefinition中保存的className，获取beanClass
 		return mbd.resolveBeanClass(beanClassLoader);
 	}
 
