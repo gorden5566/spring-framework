@@ -67,6 +67,9 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 	public static final String IGNORE_GETENV_PROPERTY_NAME = "spring.getenv.ignore";
 
 	/**
+	 * 生效的 profiles 的 key
+	 * 用于从 properties 中获取 生效的 profiles
+	 *
 	 * Name of property to set to specify active profiles: {@value}. Value may be comma
 	 * delimited.
 	 * <p>Note that certain shell environments such as Bash disallow the use of the period
@@ -103,12 +106,24 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * 生效的 Profiles
+	 */
 	private final Set<String> activeProfiles = new LinkedHashSet<>();
 
+	/**
+	 * 默认的 Profiles
+	 */
 	private final Set<String> defaultProfiles = new LinkedHashSet<>(getReservedDefaultProfiles());
 
+	/**
+	 * PropertySources 要解析的属性源
+	 */
 	private final MutablePropertySources propertySources = new MutablePropertySources();
 
+	/**
+	 * propertyResolver 负责实际的解析工作
+	 */
 	private final ConfigurablePropertyResolver propertyResolver =
 			new PropertySourcesPropertyResolver(this.propertySources);
 
