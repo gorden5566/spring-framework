@@ -74,6 +74,9 @@ public class GenericConversionService implements ConfigurableConversionService {
 	private static final GenericConverter NO_MATCH = new NoOpConverter("NO_MATCH");
 
 
+	/**
+	 * 注册的 Converter 在此
+	 */
 	private final Converters converters = new Converters();
 
 	private final Map<ConverterCacheKey, GenericConverter> converterCache = new ConcurrentReferenceHashMap<>(64);
@@ -495,6 +498,8 @@ public class GenericConversionService implements ConfigurableConversionService {
 
 
 	/**
+	 * 管理所有注册到这里的 converter
+	 *
 	 * Manages all converters registered with the service.
 	 */
 	private static class Converters {
