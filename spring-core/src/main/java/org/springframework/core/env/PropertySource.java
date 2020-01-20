@@ -24,6 +24,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * 表示键值属性对源的抽象基类
+ * getSource() 方法返回的可以是任何类型的 T，它封装了 properties
+ * 例如 java.util.Properties、java.util.Map 等
+ *
  * Abstract base class representing a source of name/value property pairs. The underlying
  * {@linkplain #getSource() source object} may be of any type {@code T} that encapsulates
  * properties. Examples include {@link java.util.Properties} objects, {@link java.util.Map}
