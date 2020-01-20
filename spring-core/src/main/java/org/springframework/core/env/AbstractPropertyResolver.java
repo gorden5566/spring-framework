@@ -32,6 +32,8 @@ import org.springframework.util.PropertyPlaceholderHelper;
 import org.springframework.util.SystemPropertyUtils;
 
 /**
+ * 用于解析 properties 的抽象基类
+ *
  * Abstract base class for resolving properties against any underlying source.
  *
  * @author Chris Beams
@@ -45,26 +47,50 @@ public abstract class AbstractPropertyResolver implements ConfigurablePropertyRe
 	@Nullable
 	private volatile ConfigurableConversionService conversionService;
 
+	/**
+	 * 非严格解析，忽略无法解析的 placeholder
+	 */
 	@Nullable
 	private PropertyPlaceholderHelper nonStrictHelper;
 
+	/**
+	 * 严格解析，不忽略无法解析的 placeholder
+	 */
 	@Nullable
 	private PropertyPlaceholderHelper strictHelper;
 
+	/**
+	 * 忽略无法解析的嵌套 placeholder
+	 */
 	private boolean ignoreUnresolvableNestedPlaceholders = false;
 
+	/**
+	 * placeholder 前缀
+	 */
 	private String placeholderPrefix = SystemPropertyUtils.PLACEHOLDER_PREFIX;
 
+	/**
+	 * placeholder 后缀
+	 */
 	private String placeholderSuffix = SystemPropertyUtils.PLACEHOLDER_SUFFIX;
 
+	/**
+	 * key value 分隔符
+	 */
 	@Nullable
 	private String valueSeparator = SystemPropertyUtils.VALUE_SEPARATOR;
 
+	/**
+	 * 必须存在的 Properties
+	 * 这里存的 key
+	 */
 	private final Set<String> requiredProperties = new LinkedHashSet<>();
 
 
 	@Override
 	public ConfigurableConversionService getConversionService() {
+		// 需要提供一个独立的 DefaultConversionService，而不是和 PropertySourcesPropertyResolver
+		// 共享的 DefaultConversionService
 		// Need to provide an independent DefaultConversionService, not the
 		// shared DefaultConversionService used by PropertySourcesPropertyResolver.
 		ConfigurableConversionService cs = this.conversionService;
