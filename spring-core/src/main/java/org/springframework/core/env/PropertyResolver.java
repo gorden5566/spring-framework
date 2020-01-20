@@ -19,6 +19,8 @@ package org.springframework.core.env;
 import org.springframework.lang.Nullable;
 
 /**
+ * 根据资源解析出 properties 的接口
+ *
  * Interface for resolving properties against any underlying source.
  *
  * @author Chris Beams
@@ -30,12 +32,16 @@ import org.springframework.lang.Nullable;
 public interface PropertyResolver {
 
 	/**
+	 * 判断是否包含指定 key
+	 *
 	 * Return whether the given property key is available for resolution,
 	 * i.e. if the value for the given key is not {@code null}.
 	 */
 	boolean containsProperty(String key);
 
 	/**
+	 * 获取指定 key 对应的 value
+	 *
 	 * Return the property value associated with the given key,
 	 * or {@code null} if the key cannot be resolved.
 	 * @param key the property name to resolve
@@ -91,6 +97,8 @@ public interface PropertyResolver {
 	<T> T getRequiredProperty(String key, Class<T> targetType) throws IllegalStateException;
 
 	/**
+	 * 解析 placeholders
+	 *
 	 * Resolve ${...} placeholders in the given text, replacing them with corresponding
 	 * property values as resolved by {@link #getProperty}. Unresolvable placeholders with
 	 * no default value are ignored and passed through unchanged.
