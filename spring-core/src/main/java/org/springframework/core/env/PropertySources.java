@@ -22,6 +22,8 @@ import java.util.stream.StreamSupport;
 import org.springframework.lang.Nullable;
 
 /**
+ * Holder，持有一个或多个 PropertySource 对象
+ *
  * Holder containing one or more {@link PropertySource} objects.
  *
  * @author Chris Beams
