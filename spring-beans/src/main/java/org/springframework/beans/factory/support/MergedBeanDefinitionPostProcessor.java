@@ -19,6 +19,12 @@ package org.springframework.beans.factory.support;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
+ * 用于对 merged bean 进行后处理。所谓 merged bean，是对原始 bean definition 处理过后的拷贝
+ * postProcessMergedBeanDefinition 可在 post-processing 之前对 bean definition 进行处理
+ * 用于准备一些可缓存的 metadata 元数据。它同样可用于修改 bean definition，但是仅用于那些不会
+ * 被并发修改的 properties。基本上这只适用于定义在 RootBeanDefinition 本身上的操作，而不适用
+ * 于其基类的 properties
+ *
  * Post-processor callback interface for <i>merged</i> bean definitions at runtime.
  * {@link BeanPostProcessor} implementations may implement this sub-interface in order
  * to post-process the merged bean definition (a processed copy of the original bean
@@ -38,9 +44,11 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public interface MergedBeanDefinitionPostProcessor extends BeanPostProcessor {
 
 	/**
+	 * 对给定的 merged bean definition 进行后处理
+	 *
 	 * Post-process the given merged bean definition for the specified bean.
 	 * @param beanDefinition the merged bean definition for the bean
-	 * @param beanType the actual type of the managed bean instance
+	 * @param beanType the actual type of the managed bean instance. 管理的 bean 实例的类型
 	 * @param beanName the name of the bean
 	 * @see AbstractAutowireCapableBeanFactory#applyMergedBeanDefinitionPostProcessors
 	 */
