@@ -19,6 +19,8 @@ package org.springframework.core.env;
 import org.springframework.lang.Nullable;
 
 /**
+ * PropertyResolver 的实现类，用于解析 PropertySources
+ *
  * {@link PropertyResolver} implementation that resolves property values against
  * an underlying set of {@link PropertySources}.
  *
@@ -31,6 +33,9 @@ import org.springframework.lang.Nullable;
  */
 public class PropertySourcesPropertyResolver extends AbstractPropertyResolver {
 
+	/**
+	 * 要解析的 PropertySources
+	 */
 	@Nullable
 	private final PropertySources propertySources;
 
