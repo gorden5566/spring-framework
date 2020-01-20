@@ -17,6 +17,8 @@
 package org.springframework.core.env;
 
 /**
+ * 非 web 应用中 Environment 接口的标准实现
+ *
  * {@link Environment} implementation suitable for use in 'standard' (i.e. non-web)
  * applications.
  *
@@ -53,9 +55,13 @@ package org.springframework.core.env;
  */
 public class StandardEnvironment extends AbstractEnvironment {
 
+	/** SystemProperties 的名字 **/
 	/** System environment property source name: {@value}. */
 	public static final String SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME = "systemEnvironment";
 
+	/**
+	 * SystemEnvironment 的名字
+	 */
 	/** JVM system properties property source name: {@value}. */
 	public static final String SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME = "systemProperties";
 
