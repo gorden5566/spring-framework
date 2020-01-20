@@ -19,6 +19,8 @@ package org.springframework.core.convert.converter;
 import org.springframework.lang.Nullable;
 
 /**
+ * 类型转换器，用于把源类型 S 转换为目标类型 T
+ *
  * A converter converts a source object of type {@code S} to a target of type {@code T}.
  *
  * <p>Implementations of this interface are thread-safe and can be shared.
