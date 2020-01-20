@@ -19,6 +19,11 @@ package org.springframework.core.env;
 import java.util.Map;
 
 /**
+ * 大多数 Environment 要实现的配置接口
+ * 提供了一些功能，包括设置 active 活跃的和默认的 profiles，以及操作底层的 property sources
+ * 允许 client 设置和校验必须的 properties
+ * 定制 conversion service 等功能包含在 ConfigurablePropertyResolver 的接口中
+ *
  * Configuration interface to be implemented by most if not all {@link Environment} types.
  * Provides facilities for setting active and default profiles and manipulating underlying
  * property sources. Allows clients to set and validate required properties, customize the
@@ -149,6 +154,9 @@ public interface ConfigurableEnvironment extends Environment, ConfigurableProper
 	Map<String, Object> getSystemEnvironment();
 
 	/**
+	 * 将 parent environment 的生效 profiles、默认 profiles 和 property sources 追加到
+	 * 当前 environment 对应的属性中
+	 *
 	 * Append the given parent environment's active profiles, default profiles and
 	 * property sources to this (child) environment's respective collections of each.
 	 * <p>For any identically-named {@code PropertySource} instance existing in both
