@@ -17,6 +17,10 @@
 package org.springframework.core.env;
 
 /**
+ * 代表当前应用程序运行环境的接口
+ * 对应用环境的两个关键方面建模：profiles 和 properties
+ * 和 property 相关的方法通过 PropertyResolver 的接口提供
+ *
  * Interface representing the environment in which the current application is running.
  * Models two key aspects of the application environment: <em>profiles</em> and
  * <em>properties</em>. Methods related to property access are exposed via the
