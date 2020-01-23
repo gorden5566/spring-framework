@@ -81,6 +81,16 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * ConfigurableListableBeanFactory 和 BeanDefinitionRegistry 接口的默认实现类
+ * 一个成熟的 bean factory，基于 bean definition metadata，通过 post-processor 进行扩展
+ *
+ * 通常的用法是，在访问 bean 之前先注册所有的 bean definition（可能是从 bean definition
+ * 文件中读取）。因此，通过名字查找 bean 开销并不大，它是在本地的 bean definition 表中
+ * 操作预解析的 bean definition 元数据
+ *
+ * 需要注意的是对应于特定格式的 bean definition 的 reader 是单独实现的，而不是通过 bean
+ * factory 的子类来实现。例如 PropertiesBeanDefinitionReader 和 XmlBeanDefinitionReader
+ *
  * Spring's default implementation of the {@link ConfigurableListableBeanFactory}
  * and {@link BeanDefinitionRegistry} interfaces: a full-fledged bean factory
  * based on bean definition metadata, extensible through post-processors.
@@ -769,6 +779,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 	@Override
 	public BeanDefinition getBeanDefinition(String beanName) throws NoSuchBeanDefinitionException {
+		// 从map中获取BeanDefinition
 		BeanDefinition bd = this.beanDefinitionMap.get(beanName);
 		if (bd == null) {
 			if (logger.isTraceEnabled()) {
