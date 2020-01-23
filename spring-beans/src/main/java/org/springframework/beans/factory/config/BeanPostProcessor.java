@@ -20,6 +20,14 @@ import org.springframework.beans.BeansException;
 import org.springframework.lang.Nullable;
 
 /**
+ * Factory钩子，可用于定制修改新的bean实例
+ *
+ * ApplicationContext可以自动检测到BeanPostProcessor bean，并且将其应用到随后的
+ * 创建bean过程中
+ *
+ * 简单的bean factory可以通过编程的方式注册post-processors，然后应用到bean的创建
+ * 过程中
+ *
  * Factory hook that allows for custom modification of new bean instances,
  * e.g. checking for marker interfaces or wrapping them with proxies.
  *
