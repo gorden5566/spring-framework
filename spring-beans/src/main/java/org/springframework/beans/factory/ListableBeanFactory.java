@@ -24,8 +24,8 @@ import org.springframework.core.ResolvableType;
 import org.springframework.lang.Nullable;
 
 /**
- * BeanFactory 接口的扩展，提供了枚举所有 bean 实例的功能，不需要 client 提供名字去变量
- * 如果 bean factory 实现了对所有bean definition 的预加载，那么可以实现该接口
+ * BeanFactory 接口的扩展，提供了枚举所有 bean 实例的功能，不需要 client 提供名字去遍历
+ * 如果 bean factory 实现了对所有 bean definition 的预加载，那么可以实现该接口
  *
  * Extension of the {@link BeanFactory} interface to be implemented by bean factories
  * that can enumerate all their bean instances, rather than attempting bean lookup
