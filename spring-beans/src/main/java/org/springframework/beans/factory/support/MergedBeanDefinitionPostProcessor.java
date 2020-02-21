@@ -45,6 +45,7 @@ public interface MergedBeanDefinitionPostProcessor extends BeanPostProcessor {
 
 	/**
 	 * 对给定的 merged bean definition 进行后处理
+	 * autowire 注解是通过这个调用触发解析的
 	 *
 	 * Post-process the given merged bean definition for the specified bean.
 	 * @param beanDefinition the merged bean definition for the bean
