@@ -23,6 +23,12 @@ import org.springframework.beans.PropertyValues;
 import org.springframework.lang.Nullable;
 
 /**
+ * BeanPostProcessor的子接口，新增了一个实例化之前的回调和一个实例化之后且autowire之前的回调
+ * 通常用于覆盖一些特殊bean的实例化，例如为特殊的 TargetSources 创建代理，或者实现额外的注入策略，
+ * 例如属性注入
+ * 注意：该接口是一个特殊用途的接口，主要用于框架内部使用。建议尽可能实现原始的 BeanPostProcessor 接口，
+ * 或者继承 InstantiationAwareBeanPostProcessorAdapter
+ *
  * Subinterface of {@link BeanPostProcessor} that adds a before-instantiation callback,
  * and a callback after instantiation but before explicit properties are set or
  * autowiring occurs.
@@ -47,6 +53,13 @@ import org.springframework.lang.Nullable;
 public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 
 	/**
+	 * 在目标 bean 实例化之前应用该 BeanPostProcessor，返回的 bean 对象可能是目标 bean 对象
+	 * 的一个代理，从而覆盖了目标 bean 的默认实例化
+	 * 如果该方法返回的是一个非空的对象，那么 bean 的创建过程会被短路，其后唯一要应用的后处理是
+	 * postProcessAfterInitialization 回调
+	 * 该回调只会应用到带有 bean class 的 bean definition，具体来讲，它不会应用到带有 factory
+	 * 方法的 bean
+	 *
 	 * Apply this BeanPostProcessor <i>before the target bean gets instantiated</i>.
 	 * The returned bean object may be a proxy to use instead of the target bean,
 	 * effectively suppressing default instantiation of the target bean.
@@ -74,6 +87,9 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	}
 
 	/**
+	 * 在 bean 已经被实例化之后，spring property 填充之前进行的操作
+	 * 可用于自定义属性注入
+	 *
 	 * Perform operations after the bean has been instantiated, via a constructor or factory method,
 	 * but before Spring property population (from explicit properties or autowiring) occurs.
 	 * <p>This is the ideal callback for performing custom field injection on the given bean
@@ -93,6 +109,8 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	}
 
 	/**
+	 * autowire 注解是在这里触发注入的
+	 *
 	 * Post-process the given property values before the factory applies them
 	 * to the given bean, without any need for property descriptors.
 	 * <p>Implementations should return {@code null} (the default) if they provide a custom
