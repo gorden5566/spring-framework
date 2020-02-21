@@ -114,12 +114,20 @@ public class InjectionMetadata {
 
 
 	/**
+	 * 一个依赖注入元素
+	 *
 	 * A single injected element.
 	 */
 	public abstract static class InjectedElement {
 
+		/**
+		 * 依赖注入的目标，可以是构造函数、setter、field
+		 */
 		protected final Member member;
 
+		/**
+		 * 是否为 field
+		 */
 		protected final boolean isField;
 
 		@Nullable
