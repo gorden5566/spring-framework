@@ -201,6 +201,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void addPropertyEditorRegistrar(PropertyEditorRegistrar registrar);
 
 	/**
+	 * 为指定的类型注册自定义的 PropertyEditor，在 bean factory 的配置过程中会调用该方法
+	 *
 	 * Register the given custom property editor for all properties of the
 	 * given type. To be invoked during factory configuration.
 	 * <p>Note that this method will register a shared custom editor instance;
