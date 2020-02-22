@@ -242,6 +242,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	TypeConverter getTypeConverter();
 
 	/**
+	 * 添加一个 StringValueResolver，可用于解析 annotation 属性
+	 *
 	 * Add a String resolver for embedded values such as annotation attributes.
 	 * @param valueResolver the String resolver to apply to embedded values
 	 * @since 3.0
@@ -249,6 +251,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void addEmbeddedValueResolver(StringValueResolver valueResolver);
 
 	/**
+	 * 是否有 embeddedValueResolver
+	 *
 	 * Determine whether an embedded value resolver has been registered with this
 	 * bean factory, to be applied through {@link #resolveEmbeddedValue(String)}.
 	 * @since 4.3
@@ -256,6 +260,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	boolean hasEmbeddedValueResolver();
 
 	/**
+	 * 使用 embeddedValueResolver 解析给定的 value
+	 *
 	 * Resolve the given embedded value, e.g. an annotation attribute.
 	 * @param value the value to resolve
 	 * @return the resolved value (may be the original value as-is)
