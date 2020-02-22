@@ -131,6 +131,9 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	ClassLoader getTempClassLoader();
 
 	/**
+	 * 设置是否要缓存 bean 的 metadata，例如 merged bean definition
+	 * 默认是开启的
+	 *
 	 * Set whether to cache bean metadata such as given bean definitions
 	 * (in merged fashion) and resolved bean classes. Default is on.
 	 * <p>Turn this flag off to enable hot-refreshing of bean definition objects
@@ -140,6 +143,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void setCacheBeanMetadata(boolean cacheBeanMetadata);
 
 	/**
+	 * 是否开启了 bean metadata 缓存
+	 *
 	 * Return whether to cache bean metadata such as given bean definitions
 	 * (in merged fashion) and resolved bean classes.
 	 */
