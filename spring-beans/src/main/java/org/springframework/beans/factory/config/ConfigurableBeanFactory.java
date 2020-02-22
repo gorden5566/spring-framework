@@ -151,6 +151,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	boolean isCacheBeanMetadata();
 
 	/**
+	 * 为 bean 定义值中的表达式指定解析策略
+	 *
 	 * Specify the resolution strategy for expressions in bean definition values.
 	 * <p>There is no expression support active in a BeanFactory by default.
 	 * An ApplicationContext will typically set a standard expression strategy
@@ -160,6 +162,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void setBeanExpressionResolver(@Nullable BeanExpressionResolver resolver);
 
 	/**
+	 * 获取 BeanExpressionResolver
+	 *
 	 * Return the resolution strategy for expressions in bean definition values.
 	 * @since 3.0
 	 */
