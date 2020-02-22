@@ -171,6 +171,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	BeanExpressionResolver getBeanExpressionResolver();
 
 	/**
+	 * 设置 ConversionService，用于转换属性值
+	 *
 	 * Specify a Spring 3.0 ConversionService to use for converting
 	 * property values, as an alternative to JavaBeans PropertyEditors.
 	 * @since 3.0
@@ -178,6 +180,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void setConversionService(@Nullable ConversionService conversionService);
 
 	/**
+	 * 获取 ConversionService
+	 *
 	 * Return the associated ConversionService, if any.
 	 * @since 3.0
 	 */
