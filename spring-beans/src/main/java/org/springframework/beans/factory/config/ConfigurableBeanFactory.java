@@ -327,6 +327,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	Scope getRegisteredScope(String scopeName);
 
 	/**
+	 * 获取用于当前 bean factory 访问安全的 AccessControlContext
+	 *
 	 * Provides a security access control context relevant to this factory.
 	 * @return the applicable AccessControlContext (never {@code null})
 	 * @since 3.0
