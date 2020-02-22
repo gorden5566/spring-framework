@@ -218,6 +218,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void copyRegisteredEditorsTo(PropertyEditorRegistry registry);
 
 	/**
+	 * 设置自定义的 TypeConverter，在转换 bean 属性值时会用到
+	 *
 	 * Set a custom type converter that this BeanFactory should use for converting
 	 * bean property values, constructor argument values, etc.
 	 * <p>This will override the default PropertyEditor mechanism and hence make
@@ -229,6 +231,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void setTypeConverter(TypeConverter typeConverter);
 
 	/**
+	 * 获取 TypeConverter
+	 *
 	 * Obtain a type converter as used by this BeanFactory. This may be a fresh
 	 * instance for each call, since TypeConverters are usually <i>not</i> thread-safe.
 	 * <p>If the default PropertyEditor mechanism is active, the returned
