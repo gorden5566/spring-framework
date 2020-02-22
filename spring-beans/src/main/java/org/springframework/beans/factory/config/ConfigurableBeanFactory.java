@@ -215,6 +215,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void registerCustomEditor(Class<?> requiredType, Class<? extends PropertyEditor> propertyEditorClass);
 
 	/**
+	 * 使用已注册到当前 BeanFactory 中的自定义 PropertyEditor 初始化给定的 PropertyEditorRegistry
+	 *
 	 * Initialize the given PropertyEditorRegistry with the custom editors
 	 * that have been registered with this BeanFactory.
 	 * @param registry the PropertyEditorRegistry to initialize
