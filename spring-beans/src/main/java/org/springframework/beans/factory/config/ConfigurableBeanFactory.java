@@ -294,6 +294,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	int getBeanPostProcessorCount();
 
 	/**
+	 * 注册 scope
+	 *
 	 * Register the given scope, backed by the given Scope implementation.
 	 * @param scopeName the scope identifier
 	 * @param scope the backing Scope implementation
@@ -301,6 +303,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void registerScope(String scopeName, Scope scope);
 
 	/**
+	 * 获取已注册的 scope 的名字
+	 *
 	 * Return the names of all currently registered scopes.
 	 * <p>This will only return the names of explicitly registered scopes.
 	 * Built-in scopes such as "singleton" and "prototype" won't be exposed.
@@ -310,6 +314,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	String[] getRegisteredScopeNames();
 
 	/**
+	 * 获取已注册的 scope
+	 *
 	 * Return the Scope implementation for the given scope name, if any.
 	 * <p>This will only return explicitly registered scopes.
 	 * Built-in scopes such as "singleton" and "prototype" won't be exposed.
