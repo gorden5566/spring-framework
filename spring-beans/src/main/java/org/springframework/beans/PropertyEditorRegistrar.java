@@ -17,6 +17,8 @@
 package org.springframework.beans;
 
 /**
+ * 用于往 PropertyEditorRegistry 中注册 PropertyEditor 的一个策略接口
+ *
  * Interface for strategies that register custom
  * {@link java.beans.PropertyEditor property editors} with a
  * {@link org.springframework.beans.PropertyEditorRegistry property editor registry}.
