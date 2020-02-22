@@ -444,6 +444,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	String[] getDependenciesForBean(String beanName);
 
 	/**
+	 * 销毁给定的 bean 实例，通常是 prototype 实例
+	 *
 	 * Destroy the given bean instance (usually a prototype instance
 	 * obtained from this factory) according to its bean definition.
 	 * <p>Any exception that arises during destruction should be caught
@@ -454,6 +456,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void destroyBean(String beanName, Object beanInstance);
 
 	/**
+	 * 销毁当前目标 scope 作用域内的 bean
+	 *
 	 * Destroy the specified scoped bean in the current target scope, if any.
 	 * <p>Any exception that arises during destruction should be caught
 	 * and logged instead of propagated to the caller of this method.
@@ -462,6 +466,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void destroyScopedBean(String beanName);
 
 	/**
+	 * 销毁 singleton bean，包括已经注册为 disposable 的内部 bean
+	 *
 	 * Destroy all singleton beans in this factory, including inner beans that have
 	 * been registered as disposable. To be called on shutdown of a factory.
 	 * <p>Any exception that arises during destruction should be caught
