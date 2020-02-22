@@ -19,6 +19,12 @@ package org.springframework.beans.factory;
 import org.springframework.beans.BeansException;
 
 /**
+ * 用于创建对象实例的工厂
+ *
+ * 依赖注入时会用到，比如创建依赖类的实例（仅创建该实例，并未对其完成依赖注入），并且提前暴露出来
+ * 比如 A 依赖了 B，并且 B 允许提前暴露（allowEarlyReference），则可通过该接口创建 B 的实例，并且
+ * 注入到 A 中，此时 B 还未完成 bean 实例化（例如 B 也依赖了其他 bean，此时还未注入进去）
+ *
  * Defines a factory which can return an Object instance
  * (possibly shared or independent) when invoked.
  *
