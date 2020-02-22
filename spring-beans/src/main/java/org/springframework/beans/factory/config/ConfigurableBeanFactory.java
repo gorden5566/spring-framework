@@ -106,6 +106,10 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	ClassLoader getBeanClassLoader();
 
 	/**
+	 * 设置一个临时的 ClassLoader，用于类型匹配
+	 * 默认是空，只使用标准的 ClassLoader
+	 * BeanFactory 完成启动阶段之后会清除掉 tempClassLoader
+	 *
 	 * Specify a temporary ClassLoader to use for type matching purposes.
 	 * Default is none, simply using the standard bean ClassLoader.
 	 * <p>A temporary ClassLoader is usually just specified if
@@ -117,6 +121,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void setTempClassLoader(@Nullable ClassLoader tempClassLoader);
 
 	/**
+	 * 获取临时的 ClassLoader
+	 *
 	 * Return the temporary ClassLoader to use for type matching purposes,
 	 * if any.
 	 * @since 2.5
