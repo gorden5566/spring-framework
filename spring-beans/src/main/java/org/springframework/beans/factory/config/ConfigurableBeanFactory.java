@@ -271,6 +271,10 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	String resolveEmbeddedValue(String value);
 
 	/**
+	 * 添加一个 BeanPostProcessor，会根据 bean factory 的配置应用到 bean 的创建过程中
+	 * 注意：在这里添加的 BeanPostProcessor 会根据注册顺序调用，通过实现 Ordered 接口定义
+	 * 的顺序会被忽略掉
+	 *
 	 * Add a new BeanPostProcessor that will get applied to beans created
 	 * by this factory. To be invoked during factory configuration.
 	 * <p>Note: Post-processors submitted here will be applied in the order of
@@ -283,6 +287,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 
 	/**
+	 * 获取 BeanPostProcessor 的数量
+	 *
 	 * Return the current number of registered BeanPostProcessors, if any.
 	 */
 	int getBeanPostProcessorCount();
