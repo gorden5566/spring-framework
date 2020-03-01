@@ -43,6 +43,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * 待注入的指定依赖的描述，封装了一个构造器参数，或者是一个方法参数，或者是一个属性。
+ * 提供了对他们的元数据的统一访问方式
+ *
  * Descriptor for a specific dependency that is about to be injected.
  * Wraps a constructor parameter, a method parameter or a field,
  * allowing unified access to their metadata.
@@ -259,6 +262,8 @@ public class DependencyDescriptor extends InjectionPoint implements Serializable
 	}
 
 	/**
+	 * 解析指定的 bean 名字，作为该依赖匹配算法的一个候选结果
+	 *
 	 * Resolve the specified bean name, as a candidate result of the matching
 	 * algorithm for this dependency, to a bean instance from the given factory.
 	 * <p>The default implementation calls {@link BeanFactory#getBean(String)}.

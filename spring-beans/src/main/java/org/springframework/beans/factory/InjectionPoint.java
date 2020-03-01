@@ -27,6 +27,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * 注入点的简单描述，指向了一个方法/构造器参数或属性
+ *
  * A simple descriptor for an injection point, pointing to a method/constructor
  * parameter or a field. Exposed by {@link UnsatisfiedDependencyException}.
  *
@@ -37,17 +39,28 @@ import org.springframework.util.ObjectUtils;
  */
 public class InjectionPoint {
 
+	/**
+	 * 构造器/方法参数
+	 */
 	@Nullable
 	protected MethodParameter methodParameter;
 
+	/**
+	 * 属性
+	 */
 	@Nullable
 	protected Field field;
 
+	/**
+	 * 与封装的 field 或 方法/构造器参数 关联的 annotation
+	 */
 	@Nullable
 	private volatile Annotation[] fieldAnnotations;
 
 
 	/**
+	 * 为一个方法或构造器参数创建一个注入点描述
+	 *
 	 * Create an injection point descriptor for a method or constructor parameter.
 	 * @param methodParameter the MethodParameter to wrap
 	 */
@@ -57,6 +70,8 @@ public class InjectionPoint {
 	}
 
 	/**
+	 * 为一个属性（field）创建一个注入点描述
+	 *
 	 * Create an injection point descriptor for a field.
 	 * @param field the field to wrap
 	 */
@@ -66,6 +81,8 @@ public class InjectionPoint {
 	}
 
 	/**
+	 * 一个复制版本的构造函数
+	 *
 	 * Copy constructor.
 	 * @param original the original descriptor to create a copy from
 	 */
@@ -77,6 +94,8 @@ public class InjectionPoint {
 	}
 
 	/**
+	 * 子类序列化时使用
+	 *
 	 * Just available for serialization purposes in subclasses.
 	 */
 	protected InjectionPoint() {
