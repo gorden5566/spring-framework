@@ -65,10 +65,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.core.annotation.Order;
-import org.springframework.tests.sample.beans.ITestBean;
-import org.springframework.tests.sample.beans.IndexedTestBean;
-import org.springframework.tests.sample.beans.NestedTestBean;
-import org.springframework.tests.sample.beans.TestBean;
+import org.springframework.tests.sample.beans.*;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.SerializationTestUtils;
 
@@ -132,6 +129,27 @@ public class AutowiredAnnotationBeanPostProcessorTests {
 		bean = (ResourceInjectionBean) bf.getBean("annotatedBean");
 		assertSame(tb, bean.getTestBean());
 		assertSame(tb, bean.getTestBean2());
+	}
+
+	@Test
+	public void testCircularReference() {
+		DefaultListableBeanFactory bf = new DefaultListableBeanFactory();
+		AutowiredAnnotationBeanPostProcessor bpp = new AutowiredAnnotationBeanPostProcessor();
+		bpp.setBeanFactory(bf);
+		bf.addBeanPostProcessor(bpp);
+
+		RootBeanDefinition bda = new RootBeanDefinition(A.class);
+		bda.setScope(RootBeanDefinition.SCOPE_SINGLETON);
+		bf.registerBeanDefinition("a", bda);
+
+		RootBeanDefinition bdb = new RootBeanDefinition(B.class);
+		bdb.setScope(RootBeanDefinition.SCOPE_SINGLETON);
+		bf.registerBeanDefinition("b", bdb);
+
+		A a = bf.getBean(A.class);
+		B b = bf.getBean(B.class);
+		assertSame(a.getB(), b);
+		assertSame(a, b.getA());
 	}
 
 	@Test
