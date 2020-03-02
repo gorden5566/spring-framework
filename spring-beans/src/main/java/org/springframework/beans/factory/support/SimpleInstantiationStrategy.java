@@ -32,6 +32,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 用于 BeanFactory 实例化对象的一个简单策略
+ *
  * Simple object instantiation strategy for use in a BeanFactory.
  *
  * <p>Does not support Method Injection, although it provides hooks for subclasses
@@ -99,7 +101,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 
 	/**
 	 * 该方法默认抛出UnsupportedOperationException异常
-	 * 子类可以重写此方法，用RootBeanDefinition中指定的方法注入实例化一个对象
+	 * 子类可以重写此方法，用RootBeanDefinition中指定的 方法注入 实例化一个对象
 	 * 实例化应该使用无参构造器
 	 *
 	 * Subclasses can override this method, which is implemented to throw
@@ -123,6 +125,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 					return null;
 				});
 			}
+			// 带参数的构造器
 			return BeanUtils.instantiateClass(ctor, args);
 		}
 		else {
@@ -147,6 +150,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 			@Nullable Object factoryBean, final Method factoryMethod, Object... args) {
 
 		try {
+			// set accessible true
 			if (System.getSecurityManager() != null) {
 				AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
 					ReflectionUtils.makeAccessible(factoryMethod);
@@ -160,6 +164,8 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 			Method priorInvokedFactoryMethod = currentlyInvokedFactoryMethod.get();
 			try {
 				currentlyInvokedFactoryMethod.set(factoryMethod);
+
+				// 调用工厂方法创建实例
 				Object result = factoryMethod.invoke(factoryBean, args);
 				if (result == null) {
 					result = new NullBean();

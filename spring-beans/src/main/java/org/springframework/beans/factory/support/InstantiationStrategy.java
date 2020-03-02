@@ -38,6 +38,8 @@ import org.springframework.lang.Nullable;
 public interface InstantiationStrategy {
 
 	/**
+	 * 使用无参构造函数完成实例化
+	 *
 	 * Return an instance of the bean with the given name in this factory.
 	 * @param bd the bean definition
 	 * @param beanName the name of the bean when it is created in this context.
@@ -51,6 +53,8 @@ public interface InstantiationStrategy {
 			throws BeansException;
 
 	/**
+	 * 使用有参构造函数完成实例化
+	 *
 	 * Return an instance of the bean with the given name in this factory,
 	 * creating it via the given constructor.
 	 * @param bd the bean definition
@@ -67,6 +71,8 @@ public interface InstantiationStrategy {
 			Constructor<?> ctor, Object... args) throws BeansException;
 
 	/**
+	 * 使用工厂方法完成实例化
+	 *
 	 * Return an instance of the bean with the given name in this factory,
 	 * creating it via the given factory method.
 	 * @param bd the bean definition
