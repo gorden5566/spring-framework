@@ -19,6 +19,8 @@ package org.springframework.beans;
 import org.springframework.lang.Nullable;
 
 /**
+ * 表示一个对象的值是否可以和其父对象的值合并
+ *
  * Interface representing an object whose value set can be merged with
  * that of a parent object.
  *
