@@ -32,6 +32,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 /**
+ * PropertyValues 接口的默认实现类
+ * 支持 properties 的简单操作，并且提供了支持深拷贝的构造函数和
+ * 从 map 构建的构造函数
+ *
  * The default implementation of the {@link PropertyValues} interface.
  * Allows simple manipulation of properties, and provides constructors
  * to support deep copy and construction from a Map.
@@ -44,11 +48,20 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("serial")
 public class MutablePropertyValues implements PropertyValues, Serializable {
 
+	/**
+	 * PropertyValue 列表
+	 */
 	private final List<PropertyValue> propertyValueList;
 
+	/**
+	 * 已处理过的 property name
+	 */
 	@Nullable
 	private Set<String> processedProperties;
 
+	/**
+	 * 是否仅包含已转换过的值
+	 */
 	private volatile boolean converted = false;
 
 
@@ -163,6 +176,8 @@ public class MutablePropertyValues implements PropertyValues, Serializable {
 	}
 
 	/**
+	 * 添加一个 PropertyValue 对象
+	 *
 	 * Add a PropertyValue object, replacing any existing one for the
 	 * corresponding property or getting merged with it (if applicable).
 	 * @param pv the PropertyValue object to add
@@ -207,6 +222,8 @@ public class MutablePropertyValues implements PropertyValues, Serializable {
 	}
 
 	/**
+	 * 修改第 i 条记录
+	 *
 	 * Modify a PropertyValue object held in this object.
 	 * Indexed from 0.
 	 */
@@ -215,6 +232,8 @@ public class MutablePropertyValues implements PropertyValues, Serializable {
 	}
 
 	/**
+	 * 如果支持合并，则将 currentPv 的属性值合并到 newPv 中
+	 *
 	 * Merges the value of the supplied 'new' {@link PropertyValue} with that of
 	 * the current {@link PropertyValue} if merging is supported and enabled.
 	 * @see Mergeable
@@ -325,6 +344,8 @@ public class MutablePropertyValues implements PropertyValues, Serializable {
 
 
 	/**
+	 * 注册已处理过的 property
+	 *
 	 * Register the specified property as "processed" in the sense
 	 * of some processor calling the corresponding setter method
 	 * outside of the PropertyValue(s) mechanism.
