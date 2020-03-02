@@ -83,6 +83,11 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 抽象的 bean factory 基类，实现了默认的 bean 创建方法，具有 RootBeanDefinition 相关的所有能力。
+ * 实现了 AutowireCapableBeanFactory 接口，在 AbstractBeanFactory 的基础上增加了 createBean 方法
+ *
+ * 提供了的 bean 的创建、属性填充、各种 wire、初始化 等功能。
+ *
  * Abstract bean factory superclass that implements default bean creation,
  * with the full capabilities specified by the {@link RootBeanDefinition} class.
  * Implements the {@link org.springframework.beans.factory.config.AutowireCapableBeanFactory}
@@ -121,9 +126,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		implements AutowireCapableBeanFactory {
 
 	/** Strategy for creating bean instances. */
+	/** 用于创建 bean 实例的策略 **/
 	private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 
 	/** Resolver strategy for method parameter names. */
+	/** 用于解析方法参数名的策略 **/
 	@Nullable
 	private ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
 
@@ -138,12 +145,16 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	private boolean allowRawInjectionDespiteWrapping = false;
 
 	/**
+	 * 在依赖检查和 autowire 是忽略的类型
+	 *
 	 * Dependency types to ignore on dependency check and autowire, as Set of
 	 * Class objects: for example, String. Default is none.
 	 */
 	private final Set<Class<?>> ignoredDependencyTypes = new HashSet<>();
 
 	/**
+	 * 在依赖检查和 autowire 时忽略的依赖接口类型
+	 *
 	 * Dependency interfaces to ignore on dependency check and autowire, as Set of
 	 * Class objects. By default, only the BeanFactory interface is ignored.
 	 */
@@ -264,6 +275,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
+	 * 忽略给定的自动装配依赖接口
+	 *
 	 * Ignore the given dependency interface for autowiring.
 	 * <p>This will typically be used by application contexts to register
 	 * dependencies that are resolved in other ways, like BeanFactory through
@@ -1456,9 +1469,17 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		String[] propertyNames = unsatisfiedNonSimpleProperties(mbd, bw);
 		for (String propertyName : propertyNames) {
+
+			// 工厂中包含该 beanName
 			if (containsBean(propertyName)) {
+
+				// 从 bean factory 中获取 bean
 				Object bean = getBean(propertyName);
+
+				// 添加到 property values
 				pvs.add(propertyName, bean);
+
+				// 注册依赖关系
 				registerDependentBean(propertyName, beanName);
 				if (logger.isTraceEnabled()) {
 					logger.trace("Added autowiring by name from bean name '" + beanName +
@@ -1586,6 +1607,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
+	 * 确定给定的bean属性是否被排除在依赖项检查之外
+	 * 这里会排除 CGLIB 定义的属性、与待忽略类型相匹配的属性，以及由待忽略接口定义的属性
+	 *
 	 * Determine whether the given bean property is excluded from dependency checks.
 	 * <p>This implementation excludes properties defined by CGLIB and
 	 * properties whose type matches an ignored dependency type or which
