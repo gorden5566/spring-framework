@@ -62,6 +62,8 @@ public interface Resource extends InputStreamSource {
 	boolean exists();
 
 	/**
+	 * 是否可读
+	 *
 	 * Indicate whether non-empty contents of this resource can be read via
 	 * {@link #getInputStream()}.
 	 * <p>Will be {@code true} for typical resource descriptors that exist
@@ -77,6 +79,8 @@ public interface Resource extends InputStreamSource {
 	}
 
 	/**
+	 * 是否处于打开状态
+	 *
 	 * Indicate whether this resource represents a handle with an open stream.
 	 * If {@code true}, the InputStream cannot be read multiple times,
 	 * and must be read and closed to avoid resource leaks.
@@ -87,6 +91,8 @@ public interface Resource extends InputStreamSource {
 	}
 
 	/**
+	 * 是否为一个文件
+	 *
 	 * Determine whether this resource represents a file in a file system.
 	 * A value of {@code true} strongly suggests (but does not guarantee)
 	 * that a {@link #getFile()} call will succeed.
