@@ -146,12 +146,15 @@ public class EncodedResource implements InputStreamSource {
 	 */
 	public Reader getReader() throws IOException {
 		if (this.charset != null) {
+			// 设置了 charset
 			return new InputStreamReader(this.resource.getInputStream(), this.charset);
 		}
 		else if (this.encoding != null) {
+			// 设置了 encoding
 			return new InputStreamReader(this.resource.getInputStream(), this.encoding);
 		}
 		else {
+			// 未设置编码
 			return new InputStreamReader(this.resource.getInputStream());
 		}
 	}
