@@ -161,12 +161,15 @@ public class ClassPathResource extends AbstractFileResolvingResource {
 	@Nullable
 	protected URL resolveURL() {
 		if (this.clazz != null) {
+			// 委托给 class 去加载
 			return this.clazz.getResource(this.path);
 		}
 		else if (this.classLoader != null) {
+			// 委托给 classLoader 去加载
 			return this.classLoader.getResource(this.path);
 		}
 		else {
+			// 使用 system classLoader 加载
 			return ClassLoader.getSystemResource(this.path);
 		}
 	}
@@ -180,12 +183,15 @@ public class ClassPathResource extends AbstractFileResolvingResource {
 	public InputStream getInputStream() throws IOException {
 		InputStream is;
 		if (this.clazz != null) {
+			// 委托给 class 去加载
 			is = this.clazz.getResourceAsStream(this.path);
 		}
 		else if (this.classLoader != null) {
+			// 委托给 classLoader 去加载
 			is = this.classLoader.getResourceAsStream(this.path);
 		}
 		else {
+			// 使用 system classLoader 加载
 			is = ClassLoader.getSystemResourceAsStream(this.path);
 		}
 		if (is == null) {
