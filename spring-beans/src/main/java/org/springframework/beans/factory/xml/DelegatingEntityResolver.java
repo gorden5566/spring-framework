@@ -45,8 +45,10 @@ public class DelegatingEntityResolver implements EntityResolver {
 	public static final String XSD_SUFFIX = ".xsd";
 
 
+	/** dtd 解析器，默认实现为 BeansDtdResolver **/
 	private final EntityResolver dtdResolver;
 
+	/** xsd 解析器，默认实现为 PluggableSchemaResolver **/
 	private final EntityResolver schemaResolver;
 
 
@@ -82,9 +84,11 @@ public class DelegatingEntityResolver implements EntityResolver {
 	public InputSource resolveEntity(String publicId, @Nullable String systemId) throws SAXException, IOException {
 		if (systemId != null) {
 			if (systemId.endsWith(DTD_SUFFIX)) {
+				// dtd 格式文档解析
 				return this.dtdResolver.resolveEntity(publicId, systemId);
 			}
 			else if (systemId.endsWith(XSD_SUFFIX)) {
+				// xsd 格式文档解析，默认到 META-INF/spring.schemas 中查找
 				return this.schemaResolver.resolveEntity(publicId, systemId);
 			}
 		}
