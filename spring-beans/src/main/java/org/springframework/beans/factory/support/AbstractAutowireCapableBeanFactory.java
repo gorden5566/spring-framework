@@ -275,7 +275,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
-	 * 忽略给定的自动装配依赖接口
+	 * 忽略给定接口的自动装配，通过其他方式进行注入
+	 * 例如通过实现 BeanFactoryAware 接口来完成 BeanFactory 属性的注入
 	 *
 	 * Ignore the given dependency interface for autowiring.
 	 * <p>This will typically be used by application contexts to register
