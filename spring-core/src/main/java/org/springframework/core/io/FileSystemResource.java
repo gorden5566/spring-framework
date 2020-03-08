@@ -173,6 +173,7 @@ public class FileSystemResource extends AbstractResource implements WritableReso
 	@Override
 	public InputStream getInputStream() throws IOException {
 		try {
+			// 打开一个 NIO 文件流
 			return Files.newInputStream(this.filePath);
 		}
 		catch (NoSuchFileException ex) {
