@@ -41,6 +41,8 @@ import java.io.InputStream;
 public interface InputStreamSource {
 
 	/**
+	 * 获取 InputStream
+	 *
 	 * Return an {@link InputStream} for the content of an underlying resource.
 	 * <p>It is expected that each call creates a <i>fresh</i> stream.
 	 * <p>This requirement is particularly important when you consider an API such
