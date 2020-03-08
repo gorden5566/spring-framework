@@ -112,10 +112,13 @@ public class PluggableSchemaResolver implements EntityResolver {
 		}
 
 		if (systemId != null) {
+			// 获取 systemId 对应的本地文件位置
 			String resourceLocation = getSchemaMappings().get(systemId);
 			if (resourceLocation != null) {
+				// 加载文件
 				Resource resource = new ClassPathResource(resourceLocation, this.classLoader);
 				try {
+					// 封装为 InputSource
 					InputSource source = new InputSource(resource.getInputStream());
 					source.setPublicId(publicId);
 					source.setSystemId(systemId);
@@ -147,6 +150,7 @@ public class PluggableSchemaResolver implements EntityResolver {
 						logger.trace("Loading schema mappings from [" + this.schemaMappingsLocation + "]");
 					}
 					try {
+						// 加载 META-INF/spring.schemas 文件配置
 						Properties mappings =
 								PropertiesLoaderUtils.loadAllProperties(this.schemaMappingsLocation, this.classLoader);
 						if (logger.isTraceEnabled()) {
@@ -154,6 +158,8 @@ public class PluggableSchemaResolver implements EntityResolver {
 						}
 						schemaMappings = new ConcurrentHashMap<>(mappings.size());
 						CollectionUtils.mergePropertiesIntoMap(mappings, schemaMappings);
+
+						// 保存到 schemaMappings 中
 						this.schemaMappings = schemaMappings;
 					}
 					catch (IOException ex) {
