@@ -207,7 +207,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	}
 
 	/**
-	 * 解析自定义 element
+	 * 解析默认 element
 	 *
 	 * @param ele
 	 * @param delegate
