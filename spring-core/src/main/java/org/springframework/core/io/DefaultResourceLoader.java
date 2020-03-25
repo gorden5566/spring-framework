@@ -147,6 +147,7 @@ public class DefaultResourceLoader implements ResourceLoader {
 	public Resource getResource(String location) {
 		Assert.notNull(location, "Location must not be null");
 
+		// 用于处理自定义协议的 spi 扩展
 		for (ProtocolResolver protocolResolver : this.protocolResolvers) {
 			Resource resource = protocolResolver.resolve(location, this);
 			if (resource != null) {
@@ -154,12 +155,15 @@ public class DefaultResourceLoader implements ResourceLoader {
 			}
 		}
 
+		// 路径以 / 开头
 		if (location.startsWith("/")) {
 			return getResourceByPath(location);
 		}
+		// 路径以 classpath: 开头
 		else if (location.startsWith(CLASSPATH_URL_PREFIX)) {
 			return new ClassPathResource(location.substring(CLASSPATH_URL_PREFIX.length()), getClassLoader());
 		}
+		// 其他情况
 		else {
 			try {
 				// Try to parse the location as a URL...
