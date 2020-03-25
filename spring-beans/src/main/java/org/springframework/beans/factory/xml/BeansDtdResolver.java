@@ -61,12 +61,16 @@ public class BeansDtdResolver implements EntityResolver {
 			int lastPathSeparator = systemId.lastIndexOf('/');
 			int dtdNameStart = systemId.indexOf(DTD_NAME, lastPathSeparator);
 			if (dtdNameStart != -1) {
+				// 名字为 spring-beans.dtd
 				String dtdFile = DTD_NAME + DTD_EXTENSION;
 				if (logger.isTraceEnabled()) {
 					logger.trace("Trying to locate [" + dtdFile + "] in Spring jar on classpath");
 				}
 				try {
+					// 从 class path 加载资源
 					Resource resource = new ClassPathResource(dtdFile, getClass());
+
+					// 组装为 InputSource
 					InputSource source = new InputSource(resource.getInputStream());
 					source.setPublicId(publicId);
 					source.setSystemId(systemId);
@@ -84,6 +88,7 @@ public class BeansDtdResolver implements EntityResolver {
 		}
 
 		// Use the default behavior -> download from website or wherever.
+		// 未解析出来
 		return null;
 	}
 
