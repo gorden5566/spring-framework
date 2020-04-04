@@ -145,7 +145,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	private boolean allowRawInjectionDespiteWrapping = false;
 
 	/**
-	 * 在依赖检查和 autowire 是忽略的类型
+	 * 在依赖检查和 autowire 时忽略的类型
 	 *
 	 * Dependency types to ignore on dependency check and autowire, as Set of
 	 * Class objects: for example, String. Default is none.
