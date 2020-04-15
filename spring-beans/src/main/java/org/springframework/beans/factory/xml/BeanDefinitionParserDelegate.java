@@ -322,7 +322,7 @@ public class BeanDefinitionParserDelegate {
 		// 填充默认值
 		populateDefaults(this.defaults, (parent != null ? parent.defaults : null), root);
 
-		// 通知已设置完模式值
+		// 通知已设置完默认值
 		this.readerContext.fireDefaultsRegistered(this.defaults);
 	}
 
