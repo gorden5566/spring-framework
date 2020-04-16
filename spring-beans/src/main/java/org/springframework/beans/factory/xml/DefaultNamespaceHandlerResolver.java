@@ -165,6 +165,8 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 	}
 
 	/**
+	 * 读取 META-INF/spring.handlers 文件，加载 namespaceUri 到 NamespaceHandler 的映射关系
+	 *
 	 * Load the specified NamespaceHandler mappings lazily.
 	 */
 	private Map<String, Object> getHandlerMappings() {
