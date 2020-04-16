@@ -28,6 +28,9 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.lang.Nullable;
 
 /**
+ * 在解析生成 BeanDefinition 过程中用到的 context，封装了所有相关的配置和状态
+ * 内部嵌套了 XmlReaderContext
+ *
  * Context that gets passed along a bean definition parsing process,
  * encapsulating all relevant configuration as well as state.
  * Nested inside an {@link XmlReaderContext}.
