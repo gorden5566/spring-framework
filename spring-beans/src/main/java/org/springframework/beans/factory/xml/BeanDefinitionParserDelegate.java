@@ -1420,7 +1420,7 @@ public class BeanDefinitionParserDelegate {
 			return null;
 		}
 
-		// parse
+		// 使用 NamespaceHandler 解析对应的 xml 元素
 		return handler.parse(ele, new ParserContext(this.readerContext, this, containingBd));
 	}
 
