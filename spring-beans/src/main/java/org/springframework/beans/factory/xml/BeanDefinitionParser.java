@@ -22,6 +22,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.lang.Nullable;
 
 /**
+ * DefaultBeanDefinitionDocumentReader 使用的接口，用于解析 xml 中自定义的 element
+ *
  * Interface used by the {@link DefaultBeanDefinitionDocumentReader} to handle custom,
  * top-level (directly under {@code <beans/>}) tags.
  *
