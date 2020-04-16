@@ -45,6 +45,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * xml 中 <context:component-scan/> 元素对应的解析器
+ *
  * Parser for the {@code <context:component-scan/>} element.
  *
  * @author Mark Fisher
@@ -80,14 +82,24 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 	@Override
 	@Nullable
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
+		// 获取 basePackage 配置
 		String basePackage = element.getAttribute(BASE_PACKAGE_ATTRIBUTE);
+
+		// 解析 placeholder
 		basePackage = parserContext.getReaderContext().getEnvironment().resolvePlaceholders(basePackage);
+
+		// 分割
 		String[] basePackages = StringUtils.tokenizeToStringArray(basePackage,
 				ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
 
 		// Actually scan for bean definitions and register them.
+		// 配置 scanner
 		ClassPathBeanDefinitionScanner scanner = configureScanner(parserContext, element);
+
+		// doScan
 		Set<BeanDefinitionHolder> beanDefinitions = scanner.doScan(basePackages);
+
+		// 注册 BeanDefinition
 		registerComponents(parserContext.getReaderContext(), beanDefinitions, element);
 
 		return null;
@@ -100,7 +112,10 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 		}
 
 		// Delegate bean definition registration to scanner class.
+		// create scanner
 		ClassPathBeanDefinitionScanner scanner = createScanner(parserContext.getReaderContext(), useDefaultFilters);
+
+		// configure scanner
 		scanner.setBeanDefinitionDefaults(parserContext.getDelegate().getBeanDefinitionDefaults());
 		scanner.setAutowireCandidatePatterns(parserContext.getDelegate().getAutowireCandidatePatterns());
 
@@ -147,7 +162,11 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 		if (element.hasAttribute(ANNOTATION_CONFIG_ATTRIBUTE)) {
 			annotationConfig = Boolean.valueOf(element.getAttribute(ANNOTATION_CONFIG_ATTRIBUTE));
 		}
+
+		// 开启了 annotation-config
 		if (annotationConfig) {
+
+			// 注册 annotation 相关的后处理器
 			Set<BeanDefinitionHolder> processorDefinitions =
 					AnnotationConfigUtils.registerAnnotationConfigProcessors(readerContext.getRegistry(), source);
 			for (BeanDefinitionHolder processorDefinition : processorDefinitions) {
