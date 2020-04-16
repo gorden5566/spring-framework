@@ -125,12 +125,14 @@ public class InitDestroyAnnotationBeanPostProcessor
 
 	@Override
 	public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
+		// 触发解析 init、destroy 注解元数据
 		LifecycleMetadata metadata = findLifecycleMetadata(beanType);
 		metadata.checkConfigMembers(beanDefinition);
 	}
 
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		// Initialization 之前调用 init 方法
 		LifecycleMetadata metadata = findLifecycleMetadata(bean.getClass());
 		try {
 			metadata.invokeInitMethods(bean, beanName);
@@ -151,6 +153,7 @@ public class InitDestroyAnnotationBeanPostProcessor
 
 	@Override
 	public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
+		// Destruction 之前调用 destroy 方法
 		LifecycleMetadata metadata = findLifecycleMetadata(bean.getClass());
 		try {
 			metadata.invokeDestroyMethods(bean, beanName);
@@ -201,7 +204,10 @@ public class InitDestroyAnnotationBeanPostProcessor
 		Class<?> targetClass = clazz;
 
 		do {
+			// init 方法
 			final List<LifecycleElement> currInitMethods = new ArrayList<>();
+
+			// destroy 方法
 			final List<LifecycleElement> currDestroyMethods = new ArrayList<>();
 
 			ReflectionUtils.doWithLocalMethods(targetClass, method -> {
