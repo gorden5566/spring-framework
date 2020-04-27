@@ -58,16 +58,21 @@ import org.springframework.util.StringValueResolver;
  */
 public class PropertyPlaceholderConfigurer extends PlaceholderConfigurerSupport {
 
+	/** 不使用系统属性值 **/
 	/** Never check system properties. */
 	public static final int SYSTEM_PROPERTIES_MODE_NEVER = 0;
 
 	/**
+	 * 如果解析失败，则使用系统属性值作为后备
+	 *
 	 * Check system properties if not resolvable in the specified properties.
 	 * This is the default.
 	 */
 	public static final int SYSTEM_PROPERTIES_MODE_FALLBACK = 1;
 
 	/**
+	 * 系统属性值会覆盖 resource 中的配置
+	 *
 	 * Check system properties first, before trying the specified properties.
 	 * This allows system properties to override any other property source.
 	 */
@@ -126,6 +131,8 @@ public class PropertyPlaceholderConfigurer extends PlaceholderConfigurerSupport 
 	}
 
 	/**
+	 * 使用给定的属性值解析占位符
+	 *
 	 * Resolve the given placeholder using the given properties, performing
 	 * a system properties check according to the given mode.
 	 * <p>The default implementation delegates to {@code resolvePlaceholder
@@ -209,15 +216,24 @@ public class PropertyPlaceholderConfigurer extends PlaceholderConfigurerSupport 
 	protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
 			throws BeansException {
 
+		// 构建解析器
 		StringValueResolver valueResolver = new PlaceholderResolvingStringValueResolver(props);
+
+		// 解析属性值
 		doProcessProperties(beanFactoryToProcess, valueResolver);
 	}
 
 
 	private class PlaceholderResolvingStringValueResolver implements StringValueResolver {
 
+		/**
+		 * 占位符解析帮助类
+		 */
 		private final PropertyPlaceholderHelper helper;
 
+		/**
+		 * 占位符解析器
+		 */
 		private final PlaceholderResolver resolver;
 
 		public PlaceholderResolvingStringValueResolver(Properties props) {
@@ -229,10 +245,15 @@ public class PropertyPlaceholderConfigurer extends PlaceholderConfigurerSupport 
 		@Override
 		@Nullable
 		public String resolveStringValue(String strVal) throws BeansException {
+			// 解析占位符
 			String resolved = this.helper.replacePlaceholders(strVal, this.resolver);
+
+			// 去除空格
 			if (trimValues) {
 				resolved = resolved.trim();
 			}
+
+			// null值处理
 			return (resolved.equals(nullValue) ? null : resolved);
 		}
 	}
@@ -240,6 +261,9 @@ public class PropertyPlaceholderConfigurer extends PlaceholderConfigurerSupport 
 
 	private final class PropertyPlaceholderConfigurerResolver implements PlaceholderResolver {
 
+		/**
+		 * 这是从指定的资源中加载出来的 properties 配置
+		 */
 		private final Properties props;
 
 		private PropertyPlaceholderConfigurerResolver(Properties props) {
