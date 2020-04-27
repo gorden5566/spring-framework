@@ -76,6 +76,7 @@ public class BeanDefinitionVisitor {
 	 * @see #resolveStringValue(String)
 	 */
 	public void visitBeanDefinition(BeanDefinition beanDefinition) {
+		// 处理BeanDefinition的各个字段
 		visitParentName(beanDefinition);
 		visitBeanClassName(beanDefinition);
 		visitFactoryBeanName(beanDefinition);
@@ -94,7 +95,10 @@ public class BeanDefinitionVisitor {
 	protected void visitParentName(BeanDefinition beanDefinition) {
 		String parentName = beanDefinition.getParentName();
 		if (parentName != null) {
+			// 解析占位符
 			String resolvedName = resolveStringValue(parentName);
+
+			// 不相等，则设置为解析后的结果
 			if (!parentName.equals(resolvedName)) {
 				beanDefinition.setParentName(resolvedName);
 			}
